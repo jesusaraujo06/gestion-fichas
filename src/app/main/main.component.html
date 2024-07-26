@@ -1,0 +1,24 @@
+<p-toast></p-toast>
+<div class="flex my-3 justify-content-between">
+  <div>
+    <h4 class="title">Gestión de fichas tecnicas</h4>
+  </div>
+</div>
+
+<p-card>
+  <form [formGroup]="form_search">
+    <div class="formgrid grid">
+      <div class="field col-12 md:col-4 lg:col-3">
+        <label htmlFor="tipo_documento">Tipo de documento</label>
+        <p-dropdown placeholder="Seleccione" [options]="comboTipoDocumento" styleClass="w-full p-inputtext-sm" formControlName="tipo_documento" optionLabel="descripcion" optionValue="valor" [autoDisplayFirst]="false" [showClear]="true"></p-dropdown>
+      </div>
+      <div class="field col-12 md:col-4 lg:col-3">
+        <label htmlFor="numero_documento">Número de documento</label>
+        <input placeholder="" type="string" formControlName="numero_documento" class="max-w-full p-inputtext-sm w-full" pInputText/>
+      </div>
+      <div class="field col-12 md:col-4 lg:col-3 flex align-items-end">
+        <p-button icon="pi pi-search" [label]="isLoadingSearch ? 'Buscando...' : 'Buscar'" (onClick)="getUser()" styleClass="btn-primary"></p-button>
+      </div>
+    </div>
+  </form>
+</p-card>

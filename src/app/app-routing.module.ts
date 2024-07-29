@@ -14,6 +14,11 @@ export const routes: Routes = [
         loadChildren: () => import('./main/main-routing.module')
         .then(r => r.MAIN_ROUTES)
       },
+      {
+        path: 'cita-dia',
+        loadChildren: () => import('./cita-dia/cita-dia-routing.module')
+        .then(r => r.CITA_DIA_ROUTES)
+      }
     ]
   }
 ]

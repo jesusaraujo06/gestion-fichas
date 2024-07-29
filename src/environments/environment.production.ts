@@ -8,4 +8,5 @@ export const environment = {
   apiUrlMedico: 'https://appportal.everestintelligent.com/APIMedicoHealth',
   apiParametrizacion: 'https://appportal.everestintelligent.com/APIParametrizacionGeneralHealth',
   link: 'https://appportal.everestintelligent.com/EverHealth/',
+  apiFuerzaArmada: 'http://172.27.83.196:160/FuerzaArmada-api-dev'
 };

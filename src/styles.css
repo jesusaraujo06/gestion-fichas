@@ -17,3 +17,7 @@ body {
   font-family: "Inter", sans-serif;
   /* color: var(--slate-700); */
 }
+
+.custom-padding .p-card-body {
+  padding: 5px 10px !important; /* Ajusta el valor según sea necesario */
+}

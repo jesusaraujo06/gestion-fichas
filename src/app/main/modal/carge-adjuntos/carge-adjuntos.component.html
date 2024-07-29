@@ -1,0 +1,50 @@
+<div>
+  <div class="flex flex-row flex-wrap justify-content-between mb-3">
+    <div class="flex align-items-center mr-3">
+      <label class="font-bold p-2">Foto</label>
+    </div>
+    <div class="flex align-items-center gap-3">
+      <p-button icon="pi pi-file-edit" label="Tomar Foto" styleClass="btn-primary" (onClick)="activarCamara()" *ngIf="gestionAspiranteService.aspirante.foto == undefined || gestionAspiranteService.aspirante.foto == ''"></p-button>
+      <p-button icon="pi pi-eye" label="Ver" styleClass="btn-primary" *ngIf="gestionAspiranteService.aspirante.foto !== undefined || gestionAspiranteService.aspirante.foto !== ''" (onClick)="mostrarImagenes('fotoImg')"></p-button>
+    </div>
+  </div>
+
+  <div class="flex flex-row flex-wrap justify-content-between mb-3">
+    <div class="flex align-items-center mr-3">
+      <label class="font-bold p-2">Huella</label>
+    </div>
+    <div class="flex align-items-center gap-3">
+      <p-button icon="pi pi-eye" label="Ver" styleClass="btn-primary"></p-button>
+    </div>
+  </div>
+
+  <div class="flex flex-row flex-wrap justify-content-between mb-3">
+    <div class="flex align-items-center mr-3">
+      <label class="font-bold p-2">Firma</label>
+    </div>
+    <div class="flex align-items-center gap-3">
+      <p-fileUpload mode="basic" name="firma[]" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" [maxFileSize]="1000000" (onUpload)="onUploadFirma($event)" chooseIcon="pi pi-upload" [auto]="true" chooseLabel="Cargar" *ngIf="gestionAspiranteService.aspirante.firma == undefined || gestionAspiranteService.aspirante.firma == ''"></p-fileUpload>
+      <p-button icon="pi pi-eye" label="Ver" styleClass="btn-primary" *ngIf="gestionAspiranteService.aspirante.firma !== undefined || gestionAspiranteService.aspirante.firma !== ''" (onClick)="mostrarImagenes('firmaImg')"></p-button>
+    </div>
+  </div>
+  <div *ngIf="swTomarFoto" class="card flex justify-content-center">
+    <video #videoElement autoplay></video>
+    <canvas #canvasElement style="display: none;"></canvas>
+    <p-button icon="pi pi-eye" label="Capturar Foto" (onClick)="capturarFoto()" styleClass="btn-primary"></p-button>
+  </div>
+
+  <div #fotoImg style="display: none;">
+    <div  class="card flex justify-content-center">
+      <button (click)="ocultarImagenDiv('fotoImg')" style="position: absolute; top: 10px; right: 10px;">x</button>
+      <p-image [src]="gestionAspiranteService.aspirante.foto" alt="Image" width="250" [preview]="true"></p-image>
+    </div>
+  </div>
+
+  <div #firmaImg style="display: none;">
+    <div  class="card flex justify-content-center">
+      <button (click)="ocultarImagenDiv('firmaImg')" style="position: absolute; top: 10px; right: 10px;">x</button>
+      <p-image [src]="gestionAspiranteService.aspirante.firma" alt="Image" width="250" [preview]="true"></p-image>
+    </div>
+  </div>
+</div>
+

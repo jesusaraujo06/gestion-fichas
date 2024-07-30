@@ -15,4 +15,5 @@ export class Aspirante {
   swHabilitadoParaProceso : boolean = false;
   foto: string = '';
   firma: string = '';
+  tieneHuella: boolean = false;
 }

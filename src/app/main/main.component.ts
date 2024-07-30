@@ -22,6 +22,7 @@ import { Mensajes } from '../core/models/mensajes';
 import { GestionAspiranteService } from '../core/services/gestion-aspirante.service';
 import { Aspirante } from '../core/models/aspirante';
 import { SexoCompletoPipe,FechaSimplePipe } from '../core/pipes';
+import { TipoFicha } from '../core/models/tipo_ficha';
 
 
 @Component({
@@ -66,6 +67,8 @@ export class MainComponent implements OnInit {
       }
     });
 
+
+
 		this.suscripcion = this.mensaje.subscribe(mensaje => {
 			if (mensaje) {
 			  this.messageService.add({severity:mensaje.severity, summary: mensaje.summary, detail: mensaje.detail});
@@ -81,10 +84,11 @@ export class MainComponent implements OnInit {
 	}
 
 	showCargarFormulario(especialdad: string) {
+    const tipoFicha = this.gestionAspirante.tipoFicha.find((x: TipoFicha) => x.nombre === especialdad);
 		this.ref = this.dialogService.open(CargeFormulariosComponent, {
 			header: `Cargar formulario ${especialdad}`,
 			width: '40vw',
-			data: { especialdad }
+			data: tipoFicha
 		});
 	}
 
@@ -93,6 +97,7 @@ export class MainComponent implements OnInit {
       this.loading = true;
       const tipo_documento = this.form_search.value.tipo_documento ?? '';
       const numero_documento = this.form_search.value.numero_documento ?? '';
+
       this.gestionAspirante.getDatosAspirantebyDocumento(tipo_documento, numero_documento).subscribe({
         next: (req: any) => {
           if(req.isSuccess){
@@ -108,16 +113,26 @@ export class MainComponent implements OnInit {
           this.form_search.reset();
         }
       });
+
+      this.gestionAspirante.getTipoFicha().subscribe({
+        next: (req: any) => {
+          if(req.isSuccess){
+            this.gestionAspirante.tipoFicha = req.data;
+          }
+        },
+        error: (err: any) => {
+          this.loading = false;
+        },
+        complete: () => {
+          this.loading = false;
+        }
+      });
+
     }
     else
     {
       this.mensaje.next({ detail: 'Debe seleccionar un tipo de documento y digitar el número de documento', severity: 'error', summary: 'Error' });
     }
-	}
-
-
-	onUploadTest(event: any) {
-		console.log(event);
 	}
 
 }

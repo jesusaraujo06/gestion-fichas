@@ -25,7 +25,7 @@ export class Token {
 export class AuthService {
 
     public datosUsuario: Token = new Token;
-    public usuarioId: number = 0;
+    public ProfesionalId:  number = 0;
 
     constructor(
         private cookieService: CookieService,
@@ -44,7 +44,7 @@ export class AuthService {
 
     getPermisosUsuario() {
         let params = new HttpParams();
-        params = params.set("Usuario_Id", this.usuarioId);
+        params = params.set("Usuario_Id", this.datosUsuario.id);
         return this._apiService.get<Array<PermisoUsuario>>(APIs.usuario.usuarioPermiso, false, params);
     }
 
@@ -57,6 +57,13 @@ export class AuthService {
     isPermiso(permiso: string): boolean {
         const permisos = this.datosUsuario.perfiles.find(x =>x.permiso == permiso);
         return permisos != undefined;
+    }
+
+    getProfesionalId() {
+        let params = new HttpParams();
+        params = params.set("UsuarioId", this.datosUsuario.id);
+        return this._apiService.get<any>(APIs.medico.getProfesionalId, false, params);
+
     }
 
 }

@@ -31,11 +31,11 @@ export class MainComponent {
     this._authService.getUserData().subscribe({
       next: (req:any) => {
         this._authService.datosUsuario = req;
-        this._authService.usuarioId = this._authService.datosUsuario.id;
         this._authService.getPermisosUsuario().subscribe({
           next: (req: any) => {
             if(req.isSuccess){
               this._authService.datosUsuario.perfiles = req.data;
+              this._authService.getProfesionalId().subscribe({ next: (req: any) => { this._authService.ProfesionalId = req.data; } });
             }
           },
           error: (err: any) => {

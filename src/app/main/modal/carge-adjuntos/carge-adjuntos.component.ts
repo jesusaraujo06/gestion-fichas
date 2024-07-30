@@ -69,7 +69,7 @@ export class CargeAdjuntosComponent {
       pacienteId: 10319227,
       tipoArchivo: 'FOTO',
       archivoBase64: this.foto || '',
-      usuarioRegistroId: this._authService.usuarioId,
+      usuarioRegistroId: this._authService.datosUsuario.id,
       registroIp: ''
     };
 
@@ -100,7 +100,7 @@ export class CargeAdjuntosComponent {
         pacienteId: 10319227,
         tipoArchivo: 'FIRMA',
         archivoBase64: this.firmaBase64 || '',
-        usuarioRegistroId: this._authService.usuarioId,
+        usuarioRegistroId: this._authService.datosUsuario.id,
         registroIp: ''
       };
 

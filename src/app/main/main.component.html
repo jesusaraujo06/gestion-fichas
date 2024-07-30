@@ -41,10 +41,9 @@
         <div class="flex align-items-start justify-content-start">
           <label class="p-2">Direccion: {{ gestionAspirante.aspirante.direccion }}</label>
           <label class="p-2">Edad: 35</label>
-          <label class="p-2">Fecha Nacimiento: {{ gestionAspirante.aspirante.fechaNacimiento  | fechaSimple}}</label>
+          <label class="p-2">Sexo: {{ gestionAspirante.aspirante.sexo | sexocompleto }}</label>
         </div>
         <div class="flex align-items-start justify-content-start">
-          <label class="p-2">Sexo: {{ gestionAspirante.aspirante.sexo | sexocompleto }}</label>
           <label class="p-2">Nacionalidad: {{ gestionAspirante.aspirante.nacionalidad }}</label>
           <label class="p-2">Fuerza: {{ gestionAspirante.aspirante.fuerza }}</label>
         </div>
@@ -52,6 +51,23 @@
       <div class="flex-none flex align-items-center justify-content-center gap-3">
         <p-button icon="pi pi-download" (onClick)="showDialogCargarAgjuntosUsuario()" label="Cargar/ Ver Adjunto" *ngIf="authService.isPermiso('gestionaspirante.carguedocumento')" styleClass="btn-primary" ></p-button>
         <p-button icon="pi pi-eye" label="Revisar ficha tecnica" styleClass="btn-primary" *ngIf="authService.isPermiso('gestionaspirante.revisionfichatecnica')"></p-button>
+      </div>
+    </div>
+  </p-card>
+
+  <p-card styleClass="mt-3 custom-padding" *ngIf="authService.isPermiso('gestionaspirante.verlaboratorio')">
+    <div class="flex flex-row flex-wrap justify-content-between" [style]="{'width': '100%'}">
+      <div class="flex align-items-center mr-3" [style]="{'width': '20%'}">
+        <label class="font-bold p-2">Laboratorio</label>
+      </div>
+      <div class="flex-grow-1 flex justify-content-center" [style]="{'width': '25%'}">
+        <label class="font-bold p-2">Pendiente</label>
+      </div>
+      <div class="flex align-items-center gap-3 justify-content-end" [style]="{'width': '50%'}">
+        <p-button icon="pi pi-file-edit" label="Admisionar" styleClass="btn-primary" name="admisionarL"  *ngIf="authService.isPermiso('gestionaspirante.admisionar.laboratorio')"></p-button>
+        <p-button icon="pi pi-upload" label="Cargar" styleClass="btn-primary" (onClick)="showCargarFormulario('Laboratorio')" *ngIf="authService.isPermiso('gestionaspirante.adjuntarFormulario.laboratorio')"></p-button>
+        <p-button icon="pi pi-eye" label="Visualizar" styleClass="btn-primary" name="VisualisarLb" *ngIf="authService.isPermiso('gestionaspirante.visualizarlaboratorio')"></p-button>
+        <p-button icon="pi pi-thumbs-up-fill" label="Concepto" styleClass="btn-primary" name="ValorarLb" *ngIf="authService.isPermiso('gestionaspirante.valorarlaboratorio')"></p-button>
       </div>
     </div>
   </p-card>
@@ -65,8 +81,9 @@
         <label class="text-red-300 text-base">Pendiente</label>
       </div>
       <div class="flex align-items-center gap-3 justify-content-end" [style]="{'width': '50%'}">
+        <p-button icon="pi pi-file-edit" label="Admisionar" styleClass="btn-primary" name="admisionarMg" *ngIf="authService.isPermiso('gestionaspirante.admisionar.medicinageneral')"></p-button>
         <p-button icon="pi pi-file-edit" label="Llenar" styleClass="btn-primary" name="llenadoMg" *ngIf="authService.isPermiso('gestionaspirante.llenarmedicinageneral')"></p-button>
-        <p-button icon="pi pi-upload" label="Cargar" styleClass="btn-primary" (onClick)="showCargarFormulario('medicina general')" *ngIf="authService.isPermiso('gestionaspirante.adjuntarFormulario.medicinageneral')"></p-button>
+        <p-button icon="pi pi-upload" label="Cargar" styleClass="btn-primary" (onClick)="showCargarFormulario('Medicina General')" *ngIf="authService.isPermiso('gestionaspirante.adjuntarFormulario.medicinageneral')"></p-button>
         <p-button icon="pi pi-eye" label="Visualizar" name="visualizarMg" styleClass="btn-primary" *ngIf="authService.isPermiso('gestionaspirante.visualizarmedicinageneral')"></p-button>
         <p-button icon="pi pi-thumbs-up-fill" label="Concepto" styleClass="btn-primary" name="valorarMg" *ngIf="authService.isPermiso('gestionaspirante.valorarmedicinageneral')"></p-button>
       </div>
@@ -82,8 +99,9 @@
         <label class="font-bold p-2">Pendiente</label>
       </div>
       <div class="flex align-items-center gap-3 justify-content-end" [style]="{'width': '50%'}">
+        <p-button icon="pi pi-file-edit" label="Admisionar" styleClass="btn-primary" name="admisionarOt"  *ngIf="authService.isPermiso('gestionaspirante.admisionar.odontologia')"></p-button>
         <p-button icon="pi pi-file-edit" label="Llenar" styleClass="btn-primary" name="llenarOt" *ngIf="authService.isPermiso('gestionaspirante.llenarodontologia')"></p-button>
-        <p-button icon="pi pi-upload" label="Cargar" styleClass="btn-primary" (onClick)="showCargarFormulario('odontología')" *ngIf="authService.isPermiso('gestionaspirante.adjuntarFormulario.odontologia')"></p-button>
+        <p-button icon="pi pi-upload" label="Cargar" styleClass="btn-primary" (onClick)="showCargarFormulario('Odontología')" *ngIf="authService.isPermiso('gestionaspirante.adjuntarFormulario.odontologia')"></p-button>
         <p-button icon="pi pi-eye" label="Visualizar" styleClass="btn-primary" name="visualizarOt" *ngIf="authService.isPermiso('gestionaspirante.visualizarodontologia')"></p-button>
         <p-button icon="pi pi-thumbs-up-fill" label="Concepto" styleClass="btn-primary" name="valorarOt" *ngIf="authService.isPermiso('gestionaspirante.valorarodontologia')"></p-button>
       </div>
@@ -99,27 +117,11 @@
         <label class="font-bold p-2 text-green-500">Pendiente</label>
       </div>
       <div class="flex align-items-center gap-3 justify-content-end" [style]="{'width': '50%'}">
+        <p-button icon="pi pi-file-edit" label="Admisionar" styleClass="btn-primary" name="admisionarPs"  *ngIf="authService.isPermiso('gestionaspirante.admisionar.psicologia')"></p-button>
         <p-button icon="pi pi-file-edit" label="Llenar" styleClass="btn-primary" name="LlenarPs" *ngIf="authService.isPermiso('gestionaspirante.llenarpsicologia')"></p-button>
-        <p-button icon="pi pi-upload" label="Cargar" styleClass="btn-primary" (onClick)="showCargarFormulario('psicologia')" name="CargarPs" *ngIf="authService.isPermiso('gestionaspirante.adjuntarFormulario.psicologia')"></p-button>
-        <p-fileUpload mode="basic" chooseLabel="Cargar Test" name="demo[]" accept="image/*,application/pdf"  (onUpload)="onUploadTest($event)"  *ngIf="authService.isPermiso('gestionaspirante.cargartestpsicologia')"></p-fileUpload>
+        <p-button icon="pi pi-upload" label="Cargar" styleClass="btn-primary" (onClick)="showCargarFormulario('Psicología')" name="CargarPs" *ngIf="authService.isPermiso('gestionaspirante.adjuntarFormulario.psicologia')"></p-button>
         <p-button icon="pi pi-eye" label="Visualizar" styleClass="btn-primary" name="VisualizarPs" *ngIf="authService.isPermiso('gestionaspirante.visualizarpsicologia')"></p-button>
         <p-button icon="pi pi-thumbs-up-fill" label="Concepto" styleClass="btn-primary" name="ValorarPs" *ngIf="authService.isPermiso('gestionaspirante.valorarpsicologia')"></p-button>
-      </div>
-    </div>
-  </p-card>
-
-  <p-card styleClass="mt-3 custom-padding" *ngIf="authService.isPermiso('gestionaspirante.verlaboratorio')">
-    <div class="flex flex-row flex-wrap justify-content-between" [style]="{'width': '100%'}">
-      <div class="flex align-items-center mr-3" [style]="{'width': '20%'}">
-        <label class="font-bold p-2">Laboratorio</label>
-      </div>
-      <div class="flex-grow-1 flex justify-content-center" [style]="{'width': '25%'}">
-        <label class="font-bold p-2">Pendiente</label>
-      </div>
-      <div class="flex align-items-center gap-3 justify-content-end" [style]="{'width': '100%'}">
-        <p-button icon="pi pi-upload" label="Cargar" styleClass="btn-primary" (onClick)="showCargarFormulario('laboratorio')" *ngIf="authService.isPermiso('gestionaspirante.adjuntarFormulario.laboratorio')"></p-button>
-        <p-button icon="pi pi-eye" label="Visualizar" styleClass="btn-primary" name="VisualisarLb" *ngIf="authService.isPermiso('gestionaspirante.visualizarlaboratorio')"></p-button>
-        <p-button icon="pi pi-thumbs-up-fill" label="Concepto" styleClass="btn-primary" name="ValorarLb" *ngIf="authService.isPermiso('gestionaspirante.valorarlaboratorio')"></p-button>
       </div>
     </div>
   </p-card>
@@ -133,7 +135,21 @@
         <label class="font-bold p-2">Pendiente</label>
       </div>
       <div class="flex align-items-center gap-3 justify-content-end" [style]="{'width': '50%'}">
+        <p-button icon="pi pi-file-edit" label="Admisionar" styleClass="btn-primary" name="admisionar"  *ngIf="authService.isPermiso('gestionaspirante.admisionar.medicolaboral')"></p-button>
         <p-button icon="pi pi-file-edit" label="Llenar" styleClass="btn-primary" *ngIf="authService.isPermiso('gestionaspirante.llenarmedicolaboral')"></p-button>
+      </div>
+    </div>
+  </p-card>
+  <p-card styleClass="mt-3 custom-padding">
+    <div class="flex flex-row flex-wrap justify-content-between" [style]="{'width': '100%'}">
+      <div class="flex align-items-center mr-3" [style]="{'width': '20%'}">
+        <label class="font-bold p-2">Desestimiento</label>
+      </div>
+      <div class="flex-grow-1 flex justify-content-center" [style]="{'width': '25%'}">
+        <label class="font-bold p-2">Pendiente</label>
+      </div>
+      <div class="flex align-items-center gap-3 justify-content-end" [style]="{'width': '50%'}">
+        <p-button icon="pi pi-file-edit" label="Desestimiento" styleClass="btn-primary" name="desestimiento"></p-button>
       </div>
     </div>
   </p-card>

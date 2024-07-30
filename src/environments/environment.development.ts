@@ -8,5 +8,6 @@ export const environment = {
   apiUrlMedico: 'http://172.27.83.196:160/APIMedicoHealth',
   apiParametrizacion: 'http://172.27.83.196:160/APIParametrizacionGeneralHealth',
   link: 'http://172.27.83.196:160/EverHealth',
+  //apiFuerzaArmada: 'https://localhost:5001'
   apiFuerzaArmada: 'http://172.27.83.196:160/FuerzaArmada-api-dev'
 };

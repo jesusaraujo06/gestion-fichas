@@ -5,6 +5,8 @@ import { APIs } from '../constant/api';
 import { HttpParams } from '@angular/common/http';
 import { Aspirante } from '../models/aspirante';
 import { DocumentoPaciente } from '../models/documento-paciente';
+import { UploadManualFileRequest } from '../models/upload-manual-file';
+import { TipoFicha } from '../models/tipo_ficha';
 
 @Injectable({
 	providedIn: 'root'
@@ -27,10 +29,17 @@ export class GestionAspiranteService {
     firma: '',
     primerApellido: '',
     segundoApellido: '',
-    swHabilitadoParaProceso: false
+    swHabilitadoParaProceso: false,
+    tieneHuella: false
   };
 
+  public tipoFicha: TipoFicha[] = [];
+
   constructor(private _apiService: ApiService) { }
+
+    getTipoFicha() {
+      return this._apiService.get<BaseResponse<TipoFicha[]>>(APIs.ficha.getFichas, false);
+    }
 
     getDatosAspirantebyDocumento(Tipo_Identificacion: string,Identificacion: string) {
         let params = new HttpParams();
@@ -43,5 +52,8 @@ export class GestionAspiranteService {
         return this._apiService.post<DocumentoPaciente,any>(APIs.paciente.saveDocumentosAspirante, body);
     }
 
+    uploadFilesFicha(body: FormData) {
+        return this._apiService.post<FormData,any>(APIs.paciente.uploadFailManual, body);
+    }
 
 }

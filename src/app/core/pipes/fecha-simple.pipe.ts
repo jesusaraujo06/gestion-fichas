@@ -7,7 +7,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FechaSimplePipe implements PipeTransform {
 
   transform(value: string): string {
-    console.log('FechaSimplePipe', value);
     if (!value) return '';
 
     const date = new Date(value);

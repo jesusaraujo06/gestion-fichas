@@ -4,7 +4,7 @@
       <label class="font-bold p-2">Foto</label>
     </div>
     <div class="flex align-items-center gap-3">
-      <p-button icon="pi pi-file-edit" label="Tomar Foto" styleClass="btn-primary" (onClick)="activarCamara()" *ngIf="gestionAspiranteService.aspirante.foto == undefined || gestionAspiranteService.aspirante.foto == ''"></p-button>
+      <p-button icon="pi pi-file-edit" label="Tomar Foto" styleClass="btn-primary" (onClick)="activarCamara()"></p-button>
       <p-button icon="pi pi-eye" label="Ver" styleClass="btn-primary" *ngIf="gestionAspiranteService.aspirante.foto !== undefined || gestionAspiranteService.aspirante.foto !== ''" (onClick)="mostrarImagenes('fotoImg')"></p-button>
     </div>
   </div>
@@ -14,7 +14,7 @@
       <label class="font-bold p-2">Huella</label>
     </div>
     <div class="flex align-items-center gap-3">
-      <p-button icon="pi pi-eye" label="Ver" styleClass="btn-primary"></p-button>
+      <label for="" *ngIf="gestionAspiranteService.aspirante.tieneHuella">HUELLA REGITRADA</label>
     </div>
   </div>
 

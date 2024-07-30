@@ -1,7 +1,6 @@
-export class CitasRequest {
+export class GetCitasDiaMedicoVivaAndLaboralRequest {
   especialidad_Id: number = 0;
-  fechaInicio: Date = new Date();
-  fechaFin: Date = new Date();
+  fecha: Date = new Date();
   profesional_Id: number = 0;
-  estado: string = '';
+  perfil_profesional: number = 0;
 }

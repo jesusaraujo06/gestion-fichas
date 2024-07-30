@@ -14,9 +14,9 @@
       </div>
       <div class="field col-12 md:col-4 lg:col-3">
         <label htmlFor="numero_documento">Fecha</label>
-        <p-calendar selectionMode="range" [readonlyInput]="true" styleClass="w-full p-inputtext-sm" formControlName="fecha"></p-calendar>
+        <p-calendar selectionMode="single" dateFormat="dd/mm/yy" [readonlyInput]="true" styleClass="w-full p-inputtext-sm" formControlName="fecha"></p-calendar>
       </div>
-      <div class="field col-12 md:col-4 lg:col-3">
+      <div class="field col-12 md:col-4 lg:col-3 hidden">
         <label htmlFor="tipo_documento">Estado</label>
         <p-dropdown placeholder="Seleccione" [options]="comboEstado" styleClass="w-full p-inputtext-sm" formControlName="estados" optionLabel="descripcion" optionValue="valor" [autoDisplayFirst]="true" [showClear]="true"></p-dropdown>
       </div>

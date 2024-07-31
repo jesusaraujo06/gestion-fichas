@@ -1,3 +1,4 @@
+
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
@@ -18,6 +19,9 @@ import { AuthService } from '../core/services/auth.service';
 import { CitasService } from '../core/services/citas.service';
 import { TimeFormatPipe } from '../core/pipes/time-format.pipe';
 import { DateFormatPipe } from '../core/pipes/date-format.pipe';
+import { Cita } from '../core/models/cita';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { EmitirConceptoDialogComponent } from '../observation-dialog/emitir-concepto-dialog.component';
 
 @Component({
   selector: 'app-cita-dia',
@@ -44,6 +48,10 @@ export class CitaDiaComponent implements OnInit {
   isLoadingSearch: boolean = false;
   comboEspecialidades: any[] = [];
   comboEstado: comboModel[] = [];
+
+  refEmitirConceptoDialog: DynamicDialogRef | undefined;
+  private dialogService = inject(DialogService);
+
   comboFace: comboModel[] = [];
 
   form_search = new FormGroup({
@@ -84,6 +92,34 @@ export class CitaDiaComponent implements OnInit {
       }
     }, 2000);
 
+  }
+
+  emitirConcepto(item: Cita){
+    console.log(item);
+
+    this.refEmitirConceptoDialog = this.dialogService.open(
+      EmitirConceptoDialogComponent,
+      {
+        header: `Emitir concepto`,
+        styleClass: 'w-full lg:w-6',
+        contentStyle: { overflow: 'auto' },
+        maximizable: false,
+        dismissableMask: true,
+        data: item,
+      }
+    );
+
+    this.refEmitirConceptoDialog.onClose.subscribe((res: boolean) => {
+      if (res) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Éxito',
+          detail: 'Concepto emitido',
+        });
+
+        this.buscarCitas();
+      }
+    });
   }
 
   buscarCitas() {

@@ -52,9 +52,10 @@
         <label class="font-bold p-2 text-blue-800">{{ showEstado(item.estado) }}</label>
       </div>
       <div class="flex align-items-center gap-3 justify-content-center" [style]="{'width': '30%'}">
+
         <p-button label="Historia Clinica" styleClass="bg-blue-900 border-blue-900 border-round-3xl" name="historiaClinica" *ngIf="authService.isPermiso('citadia.llenarhistoriaclinica')"></p-button>
         <p-button label="Ver historia" styleClass="bg-blue-900 border-blue-900 border-round-3xl" name="verhistoria" *ngIf="authService.isPermiso('citadia.verhistoriaclinica')"></p-button>
-        <p-button label="Concepto" styleClass="bg-blue-900 border-blue-900 border-round-3xl" name="concepto" *ngIf="authService.isPermiso('citadia.emitirconcepto')" ></p-button>
+        <p-button label="Concepto" styleClass="bg-blue-900 border-blue-900 border-round-3xl" name="concepto" *ngIf="authService.isPermiso('citadia.emitirconcepto')" (onClick)="emitirConcepto(item)"></p-button>
       </div>
     </div>
   </p-card>

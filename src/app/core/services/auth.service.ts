@@ -65,5 +65,4 @@ export class AuthService {
         return this._apiService.get<any>(APIs.medico.getProfesionalId, false, params);
 
     }
-
 }

@@ -73,10 +73,10 @@ export class CitaDiaComponent implements OnInit {
       complete: () => { },
     });
 
-    this.comboEstado.push({ descripcion: 'Pendientes', valor: 'ACT', id: 1 });
-    this.comboEstado.push({ descripcion: 'Activo', valor: 'FAC', id: 2 });
-    this.comboEstado.push({ descripcion: 'Procesadas', valor: 'PRO', id: 3 });
-    this.comboEstado.push({ descripcion: 'Todos', valor: '', id: 4 });
+    this.comboEstado.push({ descripcion: 'Transito', valor: 'ACT', id: 1 });
+    this.comboEstado.push({ descripcion: 'Terminado', valor: 'FAC', id: 2 });
+    this.comboEstado.push({ descripcion: 'Admitidos', valor: 'PRO', id: 3 });
+    this.comboEstado.push({ descripcion: 'No Admitidos ', valor: '', id: 4 });
     setTimeout(() => {
       console.log(this.authService.datosUsuario);
       if (!this.authService.isPermiso('citadia.verfiltros')) {
@@ -208,4 +208,6 @@ export class CitaDiaComponent implements OnInit {
       complete: () => {},
     });
   }
+
+  
 }

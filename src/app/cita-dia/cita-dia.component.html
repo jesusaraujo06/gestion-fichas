@@ -8,19 +8,19 @@
 <p-card styleClass="custom-padding" *ngIf="authService.isPermiso('citadia.verfiltros')">
   <form [formGroup]="form_search">
     <div class="formgrid grid">
-      <div class="field col-12 md:col-4 lg:col-3">
+      <div class="field col-12 md:col-4 lg:col-3" *ngIf="authService.isPermiso('citadia.especialidad')">
         <label htmlFor="especialidades">Especialidad</label>
         <p-dropdown placeholder="Seleccione" [options]="comboEspecialidades" styleClass="w-full p-inputtext-sm" formControlName="especialidades" optionLabel="descripcion" optionValue="id" [autoDisplayFirst]="false" [showClear]="true"></p-dropdown>
       </div>
-      <div class="field col-12 md:col-4 lg:col-3 ">
-        <label htmlFor="estados">Estado</label>
+      <div class="field col-12 md:col-4 lg:col-3" *ngIf="authService.isPermiso('citadia.fase')">
+        <label htmlFor="estados">Fase</label>
         <p-dropdown placeholder="Seleccione" [options]="comboFace" styleClass="w-full p-inputtext-sm" formControlName="fase" optionLabel="descripcion" optionValue="valor" [autoDisplayFirst]="true" [showClear]="true"></p-dropdown>
       </div>
-      <div class="field col-12 md:col-4 lg:col-3 ">
+      <div class="field col-12 md:col-4 lg:col-3" *ngIf="authService.isPermiso('citadia.documento')">
         <label htmlFor="documento">Documento</label>
         <input type="text" class="w-full p-inputtext-sm" pInputText formControlName="numero_documento" />
       </div>
-      <div class="field col-12 md:col-4 lg:col-3 hidden">
+      <div class="field col-12 md:col-4 lg:col-3" *ngIf="authService.isPermiso('citadia.estados')">
         <label htmlFor="estados">Estado</label>
         <p-dropdown placeholder="Seleccione" [options]="comboEstado" styleClass="w-full p-inputtext-sm" formControlName="estados" optionLabel="descripcion" optionValue="valor" [autoDisplayFirst]="true" [showClear]="true"></p-dropdown>
       </div>

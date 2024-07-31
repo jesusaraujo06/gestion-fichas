@@ -119,6 +119,7 @@
       <div class="flex align-items-center gap-3 justify-content-end" [style]="{'width': '50%'}">
         <p-button icon="pi pi-file-edit" label="Admisionar" styleClass="btn-primary" name="admisionarPs"  *ngIf="authService.isPermiso('gestionaspirante.admisionar.psicologia')"></p-button>
         <p-button icon="pi pi-file-edit" label="Llenar" styleClass="btn-primary" name="LlenarPs" *ngIf="authService.isPermiso('gestionaspirante.llenarpsicologia')"></p-button>
+        <p-button icon="pi pi-upload" label="CAQ" styleClass="btn-primary" (onClick)="showCargarFormulario('CAQ')" *ngIf="!authService.isPermiso('gestionaspirante.adjuntarFormulario.psicologia.caq')"></p-button>
         <p-button icon="pi pi-upload" label="Cargar" styleClass="btn-primary" (onClick)="showCargarFormulario('Psicología')" name="CargarPs" *ngIf="authService.isPermiso('gestionaspirante.adjuntarFormulario.psicologia')"></p-button>
         <p-button icon="pi pi-eye" label="Visualizar" styleClass="btn-primary" name="VisualizarPs" *ngIf="authService.isPermiso('gestionaspirante.visualizarpsicologia')"></p-button>
         <p-button icon="pi pi-thumbs-up-fill" label="Concepto" styleClass="btn-primary" name="ValorarPs" *ngIf="authService.isPermiso('gestionaspirante.valorarpsicologia')"></p-button>

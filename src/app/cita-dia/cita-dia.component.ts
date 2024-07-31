@@ -1,4 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
@@ -43,26 +44,33 @@ import { EmitirConceptoDialogComponent } from '../observation-dialog/emitir-conc
   providers: [MessageService],
 })
 export class CitaDiaComponent implements OnInit {
+
   isLoadingSearch: boolean = false;
   comboEspecialidades: any[] = [];
   comboEstado: comboModel[] = [];
+
   refEmitirConceptoDialog: DynamicDialogRef | undefined;
   private dialogService = inject(DialogService);
+
+  comboFace: comboModel[] = [];
 
   form_search = new FormGroup({
     especialidades: new FormControl<any>(null),
     fecha: new FormControl<Date>(new Date()),
     estados: new FormControl<string>(''),
+    numero_documento: new FormControl<string>(''),
   });
 
   constructor(
     public messageService: MessageService,
-    public _authService: AuthService,
+    public authService: AuthService,
     public citasService: CitasService
   ) {}
 
+
+
   ngOnInit(): void {
-    this._authService.getEspecialidadMedico().subscribe({
+    this.authService.getEspecialidadMedico().subscribe({
       next: (req: any) => {
         this.comboEspecialidades = req;
         if (this.comboEspecialidades.length > 0) {
@@ -70,13 +78,20 @@ export class CitaDiaComponent implements OnInit {
         }
       },
       error: (err: any) => {},
-      complete: () => {},
+      complete: () => { },
     });
 
-    this.comboEstado.push({ descripcion: 'Pendientes', valor: 'ACT', id: 1 });
-    this.comboEstado.push({ descripcion: 'Activo', valor: 'FAC', id: 2 });
-    this.comboEstado.push({ descripcion: 'Procesadas', valor: 'PRO', id: 3 });
-    this.comboEstado.push({ descripcion: 'Todos', valor: '', id: 4 });
+    this.comboEstado.push({ descripcion: 'Transito', valor: 'ACT', id: 1 });
+    this.comboEstado.push({ descripcion: 'Terminado', valor: 'FAC', id: 2 });
+    this.comboEstado.push({ descripcion: 'Admitidos', valor: 'PRO', id: 3 });
+    this.comboEstado.push({ descripcion: 'No Admitidos ', valor: '', id: 4 });
+    setTimeout(() => {
+      console.log(this.authService.datosUsuario);
+      if (!this.authService.isPermiso('citadia.verfiltros')) {
+          this.getCitasMedicoViva();
+      }
+    }, 2000);
+
   }
 
   emitirConcepto(item: Cita){
@@ -108,21 +123,19 @@ export class CitaDiaComponent implements OnInit {
   }
 
   buscarCitas() {
-    // Obtener los valores del formulario
     const especialidades = this.form_search.value.especialidades;
     const fecha = this.form_search.value.fecha;
     const estado = this.form_search.value.estados;
 
     // Asignar los valores al objeto CitasRequest
     this.citasService.citaRequest.especialidad_Id = especialidades;
-    this.citasService.citaRequest.perfil_profesional = this._authService.datosUsuario.perfiles[0].perfilId!;
+    this.citasService.citaRequest.perfil_profesional = this.authService.datosUsuario.perfiles[0].perfilId!;
 
     if (fecha) {
       this.citasService.citaRequest.fecha = fecha;
     }
 
-    this.citasService.citaRequest.profesional_Id =
-      this._authService.ProfesionalId;
+    this.citasService.citaRequest.profesional_Id = this.authService.ProfesionalId;
 
     this.citasService.getCitasDiaMedico().subscribe({
       next: (req: any) => {
@@ -179,4 +192,58 @@ export class CitaDiaComponent implements OnInit {
       return estado;
     }
   }
+
+  getCitasMedicoViva(){
+    const fechaString = '2024-07-29';
+    const fecha = new Date(fechaString);
+    this.citasService.citaRequest.especialidad_Id = this.comboEspecialidades[0].id;
+    this.citasService.citaRequest.perfil_profesional = this.authService.datosUsuario!.perfiles[0]!.perfilId!;
+    this.citasService.citaRequest.fecha = fecha;
+
+    this.citasService.citaRequest.profesional_Id = this.authService.ProfesionalId;
+    this.citasService.getCitasDiaMedico().subscribe({
+      next: (req: any) => {
+        if (req.isSuccess) {
+          this.citasService.citas = req.data;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Éxito',
+            detail: 'Se encontraron las citas',
+          });
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Ocurrió un error al buscar las citas',
+          });
+        }
+      },
+      error: (err: any) => {
+        if (err.status == 404) {
+          if (err.error.isSuccess) {
+            this.messageService.add({
+              severity: 'info',
+              summary: 'Info',
+              detail: 'No se encontraron registros',
+            });
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Ocurrió un error al buscar las citas',
+            });
+          }
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Ocurrió un error al buscar las citas',
+          });
+        }
+      },
+      complete: () => {},
+    });
+  }
+
+  
 }

@@ -30,6 +30,7 @@ export class CargeFormulariosComponent {
   constructor(public dialogService: DialogService, public _configDialog: DynamicDialogConfig, private messageService: MessageService
     , public _authService: AuthService, public gestionAspirante: GestionAspiranteService,public padre: MainComponent) {
     this.tipoFicha = this._configDialog.data;
+    console.log(this.tipoFicha);
   }
 
   onUpload(event:any) {

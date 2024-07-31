@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
@@ -18,6 +18,9 @@ import { AuthService } from '../core/services/auth.service';
 import { CitasService } from '../core/services/citas.service';
 import { TimeFormatPipe } from '../core/pipes/time-format.pipe';
 import { DateFormatPipe } from '../core/pipes/date-format.pipe';
+import { Cita } from '../core/models/cita';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { EmitirConceptoDialogComponent } from '../observation-dialog/emitir-concepto-dialog.component';
 
 @Component({
   selector: 'app-cita-dia',
@@ -43,6 +46,8 @@ export class CitaDiaComponent implements OnInit {
   isLoadingSearch: boolean = false;
   comboEspecialidades: any[] = [];
   comboEstado: comboModel[] = [];
+  refEmitirConceptoDialog: DynamicDialogRef | undefined;
+  private dialogService = inject(DialogService);
 
   form_search = new FormGroup({
     especialidades: new FormControl<any>(null),
@@ -72,6 +77,34 @@ export class CitaDiaComponent implements OnInit {
     this.comboEstado.push({ descripcion: 'Activo', valor: 'FAC', id: 2 });
     this.comboEstado.push({ descripcion: 'Procesadas', valor: 'PRO', id: 3 });
     this.comboEstado.push({ descripcion: 'Todos', valor: '', id: 4 });
+  }
+
+  emitirConcepto(item: Cita){
+    console.log(item);
+
+    this.refEmitirConceptoDialog = this.dialogService.open(
+      EmitirConceptoDialogComponent,
+      {
+        header: `Emitir concepto`,
+        styleClass: 'w-full lg:w-6',
+        contentStyle: { overflow: 'auto' },
+        maximizable: false,
+        dismissableMask: true,
+        data: item,
+      }
+    );
+
+    this.refEmitirConceptoDialog.onClose.subscribe((res: boolean) => {
+      if (res) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Éxito',
+          detail: 'Concepto emitido',
+        });
+
+        this.buscarCitas();
+      }
+    });
   }
 
   buscarCitas() {

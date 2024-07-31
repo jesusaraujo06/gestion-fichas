@@ -50,7 +50,7 @@
       <div class="flex align-items-center gap-3 justify-content-center" [style]="{'width': '30%'}">
         <p-button label="Historia Clinica" styleClass="bg-blue-900 border-blue-900 border-round-3xl" name="historiaClinica"></p-button>
         <p-button label="Ver historia" styleClass="bg-blue-900 border-blue-900 border-round-3xl" name="verhistoria"></p-button>
-        <p-button label="Concepto" styleClass="bg-blue-900 border-blue-900 border-round-3xl" name="concepto"></p-button>
+        <p-button label="Concepto" styleClass="bg-blue-900 border-blue-900 border-round-3xl" name="concepto" (onClick)="emitirConcepto(item)"></p-button>
       </div>
     </div>
   </p-card>

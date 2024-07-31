@@ -5,19 +5,23 @@
   </div>
 </div>
 
-<p-card styleClass="custom-padding">
+<p-card styleClass="custom-padding" *ngIf="authService.isPermiso('citadia.verfiltros')">
   <form [formGroup]="form_search">
     <div class="formgrid grid">
       <div class="field col-12 md:col-4 lg:col-3">
-        <label htmlFor="tipo_documento">Especialidad</label>
+        <label htmlFor="especialidades">Especialidad</label>
         <p-dropdown placeholder="Seleccione" [options]="comboEspecialidades" styleClass="w-full p-inputtext-sm" formControlName="especialidades" optionLabel="descripcion" optionValue="id" [autoDisplayFirst]="false" [showClear]="true"></p-dropdown>
       </div>
-      <div class="field col-12 md:col-4 lg:col-3">
-        <label htmlFor="numero_documento">Fecha</label>
-        <p-calendar selectionMode="single" dateFormat="dd/mm/yy" [readonlyInput]="true" styleClass="w-full p-inputtext-sm" formControlName="fecha"></p-calendar>
+      <div class="field col-12 md:col-4 lg:col-3 ">
+        <label htmlFor="estados">Estado</label>
+        <p-dropdown placeholder="Seleccione" [options]="comboFace" styleClass="w-full p-inputtext-sm" formControlName="fase" optionLabel="descripcion" optionValue="valor" [autoDisplayFirst]="true" [showClear]="true"></p-dropdown>
+      </div>
+      <div class="field col-12 md:col-4 lg:col-3 ">
+        <label htmlFor="documento">Documento</label>
+        <input type="text" class="w-full p-inputtext-sm" pInputText formControlName="numero_documento" />
       </div>
       <div class="field col-12 md:col-4 lg:col-3 hidden">
-        <label htmlFor="tipo_documento">Estado</label>
+        <label htmlFor="estados">Estado</label>
         <p-dropdown placeholder="Seleccione" [options]="comboEstado" styleClass="w-full p-inputtext-sm" formControlName="estados" optionLabel="descripcion" optionValue="valor" [autoDisplayFirst]="true" [showClear]="true"></p-dropdown>
       </div>
       <div class="field col-12 md:col-4 lg:col-3 flex align-items-end">
@@ -48,9 +52,9 @@
         <label class="font-bold p-2 text-blue-800">{{ showEstado(item.estado) }}</label>
       </div>
       <div class="flex align-items-center gap-3 justify-content-center" [style]="{'width': '30%'}">
-        <p-button label="Historia Clinica" styleClass="bg-blue-900 border-blue-900 border-round-3xl" name="historiaClinica"></p-button>
-        <p-button label="Ver historia" styleClass="bg-blue-900 border-blue-900 border-round-3xl" name="verhistoria"></p-button>
-        <p-button label="Concepto" styleClass="bg-blue-900 border-blue-900 border-round-3xl" name="concepto"></p-button>
+        <p-button label="Historia Clinica" styleClass="bg-blue-900 border-blue-900 border-round-3xl" name="historiaClinica" *ngIf="authService.isPermiso('citadia.llenarhistoriaclinica')"></p-button>
+        <p-button label="Ver historia" styleClass="bg-blue-900 border-blue-900 border-round-3xl" name="verhistoria" *ngIf="authService.isPermiso('citadia.verhistoriaclinica')"></p-button>
+        <p-button label="Concepto" styleClass="bg-blue-900 border-blue-900 border-round-3xl" name="concepto" *ngIf="authService.isPermiso('citadia.emitirconcepto')" ></p-button>
       </div>
     </div>
   </p-card>
